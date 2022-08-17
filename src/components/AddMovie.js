@@ -24,18 +24,18 @@ function AddMovie(props) {
   return (
     <form onSubmit={submitHandler}>
       <div className={classes.control}>
-        <label htmlFor='title'>Title</label>
+        <label htmlFor='title'>제목</label>
         <input type='text' id='title' ref={titleRef} />
       </div>
       <div className={classes.control}>
-        <label htmlFor='opening-text'>Opening Text</label>
+        <label htmlFor='opening-text'>영화 정보</label>
         <textarea rows='5' id='opening-text' ref={openingTextRef}></textarea>
       </div>
       <div className={classes.control}>
-        <label htmlFor='date'>Release Date</label>
+        <label htmlFor='date'>출시일</label>
         <input type='text' id='date' ref={releaseDateRef} />
       </div>
-      <button>Add Movie</button>
+      <button>영화 정보 추가</button>
     </form>
   );
 }
