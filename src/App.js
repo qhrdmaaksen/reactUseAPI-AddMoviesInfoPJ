@@ -23,15 +23,31 @@ function App() {
 			const data = await response.json();
 			console.log('fetchMoviesHandler data :::', data)
 
-			const transformedMovies = data.results.map((movieData) => {
-				return {
-					/*id 는 Firebase 에 의하여 자동 추가됨*/
-					title: movieData.title,
-					openingText: movieData.opening_crawl,
-					releaseDate: movieData.release_date,
-				};
-			});
-			setMovies(transformedMovies);
+			/*for roof 통해 data 안에 모든 key 확인*/
+			const loadedMovies = [];
+			for (const key in data) {
+				/*loadedMovies 에 전달받은 data 의 key 와 value 들의 조합에대해 새로운 객체 푸쉬
+				* -아래와같이하면 response 로 받은 중첩 객체를 타고 들어가게됨
+				* --js 의 속성에 대한 동적 접근 방법*/
+				loadedMovies.push({
+					id: key,
+					title: data[key].title,
+					opening: data[key].openingText,
+					releaseDate: data[key].releaseDate,
+				})
+			}
+
+			/*const transformedMovies = data.results.map((movieData) => {
+							return {
+								/!*id 는 Firebase 에 의하여 자동 추가됨*!/
+								title: movieData.title,
+								openingText: movieData.opening_crawl,
+								releaseDate: movieData.release_date,
+							};
+						});
+						setMovies(transformedMovies);
+						*/
+			setMovies(loadedMovies);
 		} catch (error) {
 			setError(error.message);
 		}
