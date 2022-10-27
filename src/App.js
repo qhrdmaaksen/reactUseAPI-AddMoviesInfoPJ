@@ -32,7 +32,7 @@ function App() {
 				loadedMovies.push({
 					id: key,
 					title: data[key].title,
-					opening: data[key].openingText,
+					openingText: data[key].openingText,
 					releaseDate: data[key].releaseDate,
 				})
 			}
@@ -59,11 +59,7 @@ function App() {
 	}, [fetchMoviesHandler]);
 
 	async function addMovieHandler(movie) {
-		console.log(movie);
-		setIsLoading(true);
-		setError(null)
-		try {
-			/*POST 요청을 사용하려면 두 번째 인자를 이용해 외부로 전송하는 요청을 지정함 (method key 등)*/
+					/*POST 요청을 사용하려면 두 번째 인자를 이용해 외부로 전송하는 요청을 지정함 (method key 등)*/
 			const response = await fetch('https://react-http-d5583-default-rtdb.firebaseio.com/movies.json', {
 				method: 'POST',
 				/*body 는 js 의 객체가아닌 JSON 데이터를 필요로함
@@ -74,22 +70,15 @@ function App() {
 					'Content-Type': 'application/json'
 				}
 			})
-			if (!response.ok) {
-				throw new Error('데이터를 보내는데 실패하였습니다.')
-			}
 			/*데이터를 가져옴, Firebase 가 전달하는 데이터는 JSON 형식*/
 			const data = await response.json()
 			console.log(data)
-		} catch (error) {
-			setError(error.message)
-		}
-		setIsLoading(false)
 	}
 
 	let content = <p>영화를 찾을 수 없습니다.</p>;
 
 	if (movies.length > 0) {
-		content = <MoviesList movies={movies}/>;
+		content = <MoviesList movies={movies} />;
 	}
 
 	if (error) {
